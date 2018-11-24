@@ -13,7 +13,7 @@ def verify_args():
     """
     # Todo: verify key is only letters
     if len(sys.argv) != 3:
-        print("Usage: python3 encrypt.py <input file> <key>")
+        print("Usage: python3 Encrypt.py <input file> <key>")
         exit(1)
     elif not os.path.exists(sys.argv[1]):
         print("path is not valid")
@@ -77,6 +77,7 @@ def encrypt(path: str, key: str):
 def write_encrypted(encrypted_lines: list, output_path: str):
     """
     Given a list of encrypted lines, this function writes them to Outputs directory
+    :param output_path: Output file path
     :param encrypted_lines:
     :return:
     """
