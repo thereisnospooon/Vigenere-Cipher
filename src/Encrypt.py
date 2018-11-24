@@ -4,6 +4,7 @@ import os
 # ********************** Constants *******************
 UPPER_CYCLE = 65
 LOWER_CYCLE = 97
+ALPHABET_CYCLE = 26
 
 
 def verify_args():
@@ -37,17 +38,17 @@ def encrypt_letter(char: str, encrypt_var: str):
         if encrypt_var.isupper():
             val = (ord(char) + (ord(encrypt_var) - UPPER_CYCLE))
             if char.isupper() and val > ord("Z"):
-                return chr(val - ord("Z"))
+                return chr(val - ALPHABET_CYCLE)
             elif char.islower() and val > ord("z"):
-                return chr(val - ord("z"))
+                return chr(val - ALPHABET_CYCLE)
             else:
                 return chr(val)
         else:
             val = (ord(char) + (ord(encrypt_var) - LOWER_CYCLE))
             if char.isupper() and val > ord("Z"):
-                return chr(val - ord("Z"))
+                return chr(val - ALPHABET_CYCLE)
             elif char.islower() and val > ord("z"):
-                return chr(val - ord("z"))
+                return chr(val - ALPHABET_CYCLE)
             else:
                 return chr(val)
     else:
@@ -68,6 +69,8 @@ def encrypt(path: str, key: str):
         for line in input_file.readlines():
             cur_line = ""
             for char in line:
+                while not key[counter % len(key)].isalpha():
+                    counter += 1
                 cur_line += encrypt_letter(char, key[counter % len(key)])
                 counter += 1
             encrypted_lines.append(cur_line)
@@ -94,7 +97,7 @@ def get_output_path(path: str):
     """
     if not os.path.exists("../Outputs"):
         os.makedirs("../Outputs")
-    return "../Outputs/" + os.path.basename(path) + "_encrypted"
+    return "../Outputs/" + os.path.basename(path) + "_encrypted.txt"
 
 
 def main():
